@@ -142,10 +142,13 @@ def main():
     total = len(rows)
     configured = sum(1 for r in rows if r["has_dependabot_config"])
     unconfigured = total - configured
-    print(f"\nSummary: {configured}/{total} repos configured "
-          f"({configured * 100 // total}%), "
-          f"{unconfigured} unconfigured ({unconfigured * 100 // total}%)",
-          file=sys.stderr)
+    if total == 0:
+        print("\nSummary: 0/0 repos configured (0%), 0 unconfigured (0%)", file=sys.stderr)
+    else:
+        print(f"\nSummary: {configured}/{total} repos configured "
+              f"({configured * 100 // total}%), "
+              f"{unconfigured} unconfigured ({unconfigured * 100 // total}%)",
+              file=sys.stderr)
 
     # CSV to stdout
     fieldnames = [

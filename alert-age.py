@@ -70,11 +70,16 @@ def compute_stats(alerts):
     for repo, ages in repos.items():
         ages_sorted = sorted(ages)
         count = len(ages)
+        midpoint = count // 2
+        if count % 2 == 1:
+            p50_age = math.floor(ages_sorted[midpoint])
+        else:
+            p50_age = math.floor((ages_sorted[midpoint - 1] + ages_sorted[midpoint]) / 2)
         rows.append({
             "repository": repo,
             "open_count": count,
             "avg_open_age_days": math.floor(sum(ages) / count),
-            "p50_open_age_days": math.floor(ages_sorted[count // 2]),
+            "p50_open_age_days": p50_age,
             "max_open_age_days": math.floor(max(ages)),
             "pct_open_over_30d": math.floor(sum(1 for a in ages if a >= 30) / count * 100),
             "pct_open_over_90d": math.floor(sum(1 for a in ages if a >= 90) / count * 100),
