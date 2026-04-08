@@ -34,6 +34,8 @@ Current report output CSV columns:
 | `open_high_over_60d_count` | Number of unique open high-severity advisories older than 60 days |
 | `open_medium_count` | Number of unique open medium-severity advisories |
 | `open_medium_over_90d_count` | Number of unique open medium-severity advisories older than 90 days |
+| `open_low_count` | Number of unique open low-severity advisories |
+| `open_unknown_count` | Number of unique open advisories without a recognized severity |
 | `language` | Primary language |
 | `size_kb` | Repo size in KB |
 | `created_at` | Repo creation date |
@@ -56,6 +58,8 @@ Historical mode outputs one row per week, working backward from `--history-date`
 | `open_high_over_60d_count` | Number of unique open high-severity advisories that were at least 60 days old on that date |
 | `open_medium_count` | Number of unique open medium-severity advisories on that date |
 | `open_medium_over_90d_count` | Number of unique open medium-severity advisories that were at least 90 days old on that date |
+| `open_low_count` | Number of unique open low-severity advisories on that date |
+| `open_unknown_count` | Number of unique open advisories without a recognized severity on that date |
 
 Historical snapshots are inferred from alert `created_at`, `fixed_at`, `dismissed_at`, and `updated_at` timestamps. Reopened alerts can introduce a small amount of historical noise because the REST payload is not a perfect event log.
 

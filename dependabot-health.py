@@ -32,6 +32,8 @@ CURRENT_REPORT_FIELDNAMES = [
     "open_high_over_60d_count",
     "open_medium_count",
     "open_medium_over_90d_count",
+    "open_low_count",
+    "open_unknown_count",
     "language",
     "size_kb",
     "created_at",
@@ -49,6 +51,8 @@ HISTORY_REPORT_FIELDNAMES = [
     "open_high_over_60d_count",
     "open_medium_count",
     "open_medium_over_90d_count",
+    "open_low_count",
+    "open_unknown_count",
 ]
 
 
@@ -276,6 +280,8 @@ def compute_alert_summary(findings):
             for finding in findings
             if finding["severity"] == "medium" and finding["age_days"] >= 90
         ),
+        "open_low_count": sum(1 for finding in findings if finding["severity"] == "low"),
+        "open_unknown_count": sum(1 for finding in findings if finding["severity"] == ""),
     }
 
 
@@ -306,6 +312,8 @@ def empty_current_alert_stats():
         "open_high_over_60d_count": 0,
         "open_medium_count": 0,
         "open_medium_over_90d_count": 0,
+        "open_low_count": 0,
+        "open_unknown_count": 0,
     }
 
 
@@ -318,6 +326,8 @@ def empty_history_stats():
         "open_high_over_60d_count": 0,
         "open_medium_count": 0,
         "open_medium_over_90d_count": 0,
+        "open_low_count": 0,
+        "open_unknown_count": 0,
     }
 
 
@@ -414,7 +424,7 @@ def build_weekly_history_rows(scope_name, alert_history, end_date, weeks):
             row.update(empty_history_stats())
         rows.append(row)
 
-    rows.sort(key=lambda row: row["snapshot_date"], reverse=True)
+    rows.sort(key=lambda row: row["snapshot_date"])
     return rows
 
 
